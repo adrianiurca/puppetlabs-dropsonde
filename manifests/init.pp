@@ -12,6 +12,8 @@
 #   include dropsonde
 # @param [Boolean] enabled
 #   Set the cron job for dropsonde weekly report submit
+# @param [Boolean] use_cron
+#   Enable dropsonde to use the cron provider from the host
 # @param [Array] enable
 #   Only load these metrics. For example:
 #   ```puppet
@@ -36,6 +38,7 @@
 #   Any number or string used to generate the randomized site ID
 class dropsonde (
   Boolean           $enabled   = true,
+  Boolean           $use_cron  = true,
   Optional[Array]   $enable    = undef,
   Optional[Array]   $disable   = undef,
   Optional[String]  $cachepath = undef,
@@ -77,12 +80,14 @@ class dropsonde (
     false => absent
   }
 
-  cron { 'submit Puppet telemetry report':
-    ensure  => $ensure_cron,
-    command => '/opt/puppetlabs/puppet/bin/dropsonde submit',
-    user    => 'root',
-    weekday => fqdn_rand(6),
-    hour    => fqdn_rand(23),
-    minute  => fqdn_rand(59),
+  if $use_cron {
+    cron { 'submit Puppet telemetry report':
+      ensure  => $ensure_cron,
+      command => '/opt/puppetlabs/puppet/bin/dropsonde submit',
+      user    => 'root',
+      weekday => fqdn_rand(6),
+      hour    => fqdn_rand(23),
+      minute  => fqdn_rand(59),
+    }
   }
 }
