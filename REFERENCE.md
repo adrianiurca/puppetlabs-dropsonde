@@ -37,6 +37,7 @@ include dropsonde
 The following parameters are available in the `dropsonde` class:
 
 * [`enabled`](#enabled)
+* [`use_cron`](#use_cron)
 * [`enable`](#enable)
 * [`disable`](#disable)
 * [`cachepath`](#cachepath)
@@ -49,6 +50,14 @@ The following parameters are available in the `dropsonde` class:
 Data type: `Boolean`
 
 Set the cron job for dropsonde weekly report submit
+
+Default value: ``true``
+
+##### <a name="use_cron"></a>`use_cron`
+
+Data type: `Boolean`
+
+Enable dropsonde to use the cron provider from the host
 
 Default value: ``true``
 
