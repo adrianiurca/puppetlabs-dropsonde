@@ -69,32 +69,11 @@ The full list of options is:
 - `seed`
   - If you'd like to change your [Site ID](https://github.com/puppetlabs/dropsonde#privacy)
     then make up and enter a random number or string here.
-
-## use_cron parameter
-
-The use_cron parameter is set to true by default as the module will configure and set a cron job for the dropsonde gem to gather the required information periodically. We have decided to allow users to disable the cron functionality to be able to use this module and the dropsonde gem with different other schedulers. In the example bellow we disable cron as we decided to install the gem on a puppetserver machine where the integrated scheduler will assure the required functionality.
-Here is how you disable the cron functionality
-
-```puppet
-class { 'dropsonde':
-  use_cron => false,
-}
-```
-
-but also you can set a complex configuration
-
-```puppet
-class { 'dropsonde':
-  use_cron => false,
-  disable  => ['puppetfiles', 'modules'],
-  seed     => 'banana pancakes'
-}
-```
-
-the above configuration will install dropsonde gem, will set the seed to `'banana pancakes'`, will disable `puppetfiles` and `modules` plugins, and
-will disable cron functionality
-
-`include dropsonde` or `class { 'dropsonde': }` will set a cron job for dropsonde gem.
+- `use_cron parameter`
+  - Enable/disable cron functionality(**true**/**false** enable/disable cron job creation)
+    > Note: The use_cron parameter is set to true by default as the module will configure and set a cron job for the dropsonde gem to gather the required information periodically. We have decided to allow users to disable the cron functionality to be able to use this module and the dropsonde gem with different other schedulers. In the example bellow we disable cron as we decided to install the gem on a puppetserver machine where the integrated scheduler will assure the required functionality.
+    > Here is how you disable the cron functionality: `class { 'dropsonde': use_cron => false, }`.
+    > `include dropsonde` or `class { 'dropsonde': }` will set a cron job for dropsonde gem.
 
 ## Limitations
 
