@@ -6,10 +6,10 @@ See the documentation on [its repository page](https://github.com/puppetlabs/dro
 #### Table of Contents
 
 1. [Description](#description)
-    * [What this module manages](#managed-resources)
-3. [Usage - Configuration options](#usage)
-4. [Limitations](#limitations)
-5. [Development - Guide for contributing to the project](#development)
+   - [What this module manages](#managed-resources)
+2. [Usage - Configuration options](#usage)
+3. [Limitations](#limitations)
+4. [Development - Guide for contributing to the project](#development)
 
 ## Description
 
@@ -27,22 +27,21 @@ data.**
 
 ### Managed resources:
 
-* Installs the `dropsonde` gem.
-* Manages configuration at `/etc/puppetlabs/telemetry.yaml`.
-* Manages a weekly cronjob to submit the report at a time randomized for each infrastructure.
-
+- Installs the `dropsonde` gem.
+- Manages configuration at `/etc/puppetlabs/telemetry.yaml`.
+- Manages a weekly cronjob to submit the report at a time randomized for each infrastructure.
 
 ## Usage
 
 The simplest use case is just to declare the module and accept defaults:
 
-``` puppet
+```puppet
 include dropsonde
 ```
 
 If you prefer, you can configure several settings, such as:
 
-``` puppet
+```puppet
 class { 'dropsonde':
   disable => ['puppetfiles', 'modules'],
   seed    => 'banana pancakes'
@@ -51,38 +50,49 @@ class { 'dropsonde':
 
 The full list of options is:
 
-* `disable`
-    * An array of metrics that you don't want to report. See the available settings
-      by running `/opt/puppetlabs/puppet/bin/dropsonde list`.
-* `enable`
-    * An array of metrics that you allow to report on. All other metrics will be skipped.
-      See the available settings by running `/opt/puppetlabs/puppet/bin/dropsonde list`.
-* `update`
-    * Set to `false` to prevent the tool from automatically updating its list of
-      names of public Forge modules. Only do this if you're behind a firewall that
-      blocks access to the Forge and you're planning on manually updating this
-      periodically yourself.
-* `cachepath`
-    * The list of public Forge modules is normally stored in Puppet's `vardir`.
-      You may set the path to a different directory here if you'd like.
-* `ttl`
-    * How many days before the tool updates the list of public Forge modules.
-* `seed`
-    * If you'd like to change your [Site ID](https://github.com/puppetlabs/dropsonde#privacy)
-      then make up and enter a random number or string here.
+- `disable`
+  - An array of metrics that you don't want to report. See the available settings
+    by running `/opt/puppetlabs/puppet/bin/dropsonde list`.
+- `enable`
+  - An array of metrics that you allow to report on. All other metrics will be skipped.
+    See the available settings by running `/opt/puppetlabs/puppet/bin/dropsonde list`.
+- `update`
+  - Set to `false` to prevent the tool from automatically updating its list of
+    names of public Forge modules. Only do this if you're behind a firewall that
+    blocks access to the Forge and you're planning on manually updating this
+    periodically yourself.
+- `cachepath`
+  - The list of public Forge modules is normally stored in Puppet's `vardir`.
+    You may set the path to a different directory here if you'd like.
+- `ttl`
+  - How many days before the tool updates the list of public Forge modules.
+- `seed`
+  - If you'd like to change your [Site ID](https://github.com/puppetlabs/dropsonde#privacy)
+    then make up and enter a random number or string here.
 
+## use_cron parameter
+
+This parameter will alow to enable/disable cron capability of dropsonde module.
+When this parameter will be set on `false` the module will be responsible only for installing and configure the dropsonde gem.
+When this parameter will be set on `true`(the default value) the module will install, configure and set the cron job.
+This parameter allows us to integrate dropsonde with puppetserver and use the scheduler from puppetserver.
+Here is a simple manifest about how to this parameter with cron capability disabled:
+
+```puppet
+class { 'dropsonde':
+  use_cron => false,
+}
+```
 
 ## Limitations
 
 This module is currently only tested on Puppet supported platforms.
 
-
 ## Development
 
 There's very little interesting development going on with the module, but we'd
 love to get your help on gathering the right metrics and aggregating them in
-ways that provide the most community benefits *without compromising privacy*.
+ways that provide the most community benefits _without compromising privacy_.
 
-* [Telemetry Client](https://github.com/puppetlabs/dropsonde)
-* [Aggregation Queries](https://github.com/puppetlabs/dropsonde-aggregation)
-
+- [Telemetry Client](https://github.com/puppetlabs/dropsonde)
+- [Aggregation Queries](https://github.com/puppetlabs/dropsonde-aggregation)

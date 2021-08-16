@@ -3,6 +3,10 @@
 require 'spec_helper_acceptance'
 
 describe 'dropsonde complete configuration' do
+  before(:all) do
+    pre_run
+  end
+
   after(:all) do
     remove_cron = <<-MANIFEST
       cron { 'submit Puppet telemetry report':

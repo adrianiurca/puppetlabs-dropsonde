@@ -15,14 +15,6 @@ describe 'dropsonde base configuration' do
     after(:all) do
       # remove the dropsonde gem
       run_shell('yes | /opt/puppetlabs/puppet/bin/gem uninstall dropsonde')
-
-      # install necessary deps for running further tests
-      if os[:family] == 'redhat' && os[:release].to_i == 7
-        run_shell('yum install cronie -y')
-      end
-      if os[:family] == 'debian' || os[:family] == 'ubuntu'
-        run_shell('apt-get install cron -y')
-      end
     end
 
     it 'runs successfully' do
@@ -32,6 +24,10 @@ describe 'dropsonde base configuration' do
 
   context 'with enabled => true and use_cron => true' do
     let(:dropsonde_manifest) { 'include dropsonde' }
+
+    before(:all) do
+      pre_run
+    end
 
     after(:all) do
       remove_cron = <<-MANIFEST
@@ -69,6 +65,10 @@ describe 'dropsonde base configuration' do
           enabled => false,
         }
       MANIFEST
+    end
+
+    before(:all) do
+      pre_run
     end
 
     after(:all) do
