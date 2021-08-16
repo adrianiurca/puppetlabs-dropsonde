@@ -72,17 +72,29 @@ The full list of options is:
 
 ## use_cron parameter
 
-This parameter will alow to enable/disable cron capability of dropsonde module.
-When this parameter will be set on `false` the module will be responsible only for installing and configure the dropsonde gem.
-When this parameter will be set on `true`(the default value) the module will install, configure and set the cron job.
-This parameter allows us to integrate dropsonde with puppetserver and use the scheduler from puppetserver.
-Here is a simple manifest about how to this parameter with cron capability disabled:
+The use_cron parameter is set to true by default as the module will configure and set a cron job for the dropsonde gem to gather the required information periodically. We have decided to allow users to disable the cron functionality to be able to use this module and the dropsonde gem with different other schedulers. In the example bellow we disable cron as we decided to install the gem on a puppetserver machine where the integrated scheduler will assure the required functionality.
+Here is how you disable the cron functionality
 
 ```puppet
 class { 'dropsonde':
   use_cron => false,
 }
 ```
+
+but also you can set a complex configuration
+
+```puppet
+class { 'dropsonde':
+  use_cron => false,
+  disable  => ['puppetfiles', 'modules'],
+  seed     => 'banana pancakes'
+}
+```
+
+`include dropsonde` or `class { 'dropsonde': }` will set a cron job for dropsonde gem.
+
+the above configuration will install dropsonde gem, will set the seed to 'banana pancakes', will disable `puppetfiles` and `modules`, and
+will disable cron functionality
 
 ## Limitations
 
