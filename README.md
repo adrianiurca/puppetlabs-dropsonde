@@ -91,7 +91,7 @@ class { 'dropsonde':
 }
 ```
 
-the above configuration will install dropsonde gem, will set the seed to 'banana pancakes', will disable `puppetfiles` and `modules`, and
+the above configuration will install dropsonde gem, will set the seed to `'banana pancakes'`, will disable `puppetfiles` and `modules` plugins, and
 will disable cron functionality
 
 `include dropsonde` or `class { 'dropsonde': }` will set a cron job for dropsonde gem.
